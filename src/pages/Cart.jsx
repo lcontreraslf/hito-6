@@ -1,31 +1,8 @@
-import React, { useState } from "react";
-import { pizzaCart } from "../assets/pizzas";
+import React from "react";
+import { useCart } from "../context/CartContext";
 
 function Cart() {
-  const [cart, setCart] = useState(pizzaCart);
-
-  const incrementaCantidad = (id) => {
-    setCart(
-      cart.map((pizza) =>
-        pizza.id === id ? { ...pizza, count: pizza.count + 1 } : pizza
-      )
-    );
-  };
-  const disminuyeCantidad = (id) => {
-    setCart(
-      cart
-        .map((pizza) =>
-          pizza.id === id ? { ...pizza, count: pizza.count - 1 } : pizza
-        )
-        .filter(pizza => pizza.count > 0)
-    );
-  };
-
-
-  const totalCompra = cart.reduce(
-    (acc, pizza) => acc + pizza.price * pizza.count,
-    0
-  );
+  const { cart, incrementaCantidad, disminuyeCantidad, eliminarDelCarrito, totalCompra } = useCart();
 
   return (
     <div className="d-flex justify-content-center align-items-center vh-100">
@@ -39,7 +16,8 @@ function Cart() {
               <p>Precio: ${pizza.price}</p>
               <p>Cantidad: {pizza.count}</p>
               <button onClick={() => incrementaCantidad(pizza.id)} className="btn btn-primary me-2">+</button>
-              <button onClick={() => disminuyeCantidad(pizza.id)} className="btn btn-secondary">-</button>
+              <button onClick={() => disminuyeCantidad(pizza.id)} className="btn btn-secondary me-2">-</button>
+              <button onClick={() => eliminarDelCarrito(pizza.id)} className="btn btn-danger">Eliminar</button>
             </div>
           </div>
         ))}

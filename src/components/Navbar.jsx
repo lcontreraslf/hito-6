@@ -2,13 +2,15 @@ import React from 'react';
 import { Navbar, Nav } from 'react-bootstrap';
 import { FaPizzaSlice, FaLock, FaSignOutAlt, FaSignInAlt, FaUserPlus, FaShoppingCart } from 'react-icons/fa';
 import { Link } from "react-router-dom";
+import { useCart } from '../context/CartContext';
 
 const NavigationBar = () => {
-    const total = 25000;
+    const { totalCompra } = useCart();
     const token = false;
+
     return (
         <Navbar bg="dark" variant="dark" expand="lg">
-            <Navbar.Brand >
+            <Navbar.Brand>
                 <FaPizzaSlice /> Pizzería Mamma Mía
             </Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -35,16 +37,14 @@ const NavigationBar = () => {
                             <Nav.Link as={Link} to="/login">
                                 <FaSignInAlt /> Login
                             </Nav.Link>
-
-
                         </>
                     )}
 
                     <Nav.Link as={Link} to="/cart">
-                        <FaShoppingCart /> Total: ${total.toLocaleString()}
+                        <FaShoppingCart /> Total: ${totalCompra.toLocaleString()}
                     </Nav.Link>
 
-                    <Nav.Link as={Link} to="/Profile">
+                    <Nav.Link as={Link} to="/profile">
                         <FaUserPlus /> Profile
                     </Nav.Link>
 
